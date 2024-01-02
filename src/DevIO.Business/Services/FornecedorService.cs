@@ -11,7 +11,9 @@ namespace DevIO.Business.Services
         private const string fornecedorExistente = "Já existe um fornecedor com este documento informado.";
         private readonly IFornecedorRepository _fornecedorRepository;
 
-        public FornecedorService(IFornecedorRepository fornecedorRepository)
+
+        public FornecedorService(IFornecedorRepository fornecedorRepository,
+            INotificador notificador) : base(notificador)
         {
             _fornecedorRepository = fornecedorRepository;
         }
