@@ -15,5 +15,9 @@ namespace DevIO.Business.Services
 
             return false;
         }
+
+        protected void Notificar(string mensagem) 
+        {
+        }
     }
 }
