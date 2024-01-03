@@ -9,5 +9,8 @@
         public string? Bairro { get; set; }
         public string? Cidade { get; set; }
         public string? Estado { get; set; }
+
+        // EF RELATION //
+        public Fornecedor Fornecedor { get; set; }
     }
 }

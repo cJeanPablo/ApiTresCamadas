@@ -7,6 +7,8 @@
         public TipoFornecedor TipoFornecedor { get; set; }
         public bool Ativo { get; set; }
         public Endereco? Endereco { get; set; }
+
+        // EF RELATION //
         public IEnumerable<Produto> Produtos { get; set; }
     }
 }
