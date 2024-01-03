@@ -7,7 +7,8 @@ namespace DevIO.Data.Context
     {
         public SqlDbContext(DbContextOptions<SqlDbContext> options) : base(options)
         {
-            
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
         public DbSet<Produto> Produtos { get; set; }
@@ -30,6 +31,22 @@ namespace DevIO.Data.Context
                 item.DeleteBehavior = DeleteBehavior.ClientSetNull;
             }
             base.OnModelCreating(modelBuilder);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataCadastro") != null))
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Property("DataCadastro").CurrentValue = DateTime.Now;
+                }
+                else if (entry.State == EntityState.Modified)
+                {
+                    entry.Property("DataCadastro").IsModified = false;
+                }
+            }
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }
 }
