@@ -11,6 +11,7 @@
         public string? Estado { get; set; }
 
         // EF RELATION //
+        public Guid FornecedorId { get; set; }
         public Fornecedor Fornecedor { get; set; }
     }
 }
