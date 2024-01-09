@@ -7,6 +7,7 @@ using System.Net;
 
 namespace DevIO.API.Controllers
 {
+    [Route("api/fornecedores")]
     public class FornecedoresController : MainController
     {
         private readonly IFornecedorRepository _repository;
@@ -22,12 +23,12 @@ namespace DevIO.API.Controllers
             _service = service;
             _mapper = mapper;
         }
-        [Route("api/fornecedores")]
+
 
         [HttpGet]
-        public async Task<ActionResult<FornecedorDTO>> ObterTodos()
+        public async Task<IEnumerable<FornecedorDTO>> ObterTodos()
         {
-            return _mapper.Map<FornecedorDTO>(await _repository.ObterTodos());
+            return _mapper.Map<IEnumerable<FornecedorDTO>>(await _repository.ObterTodos());
         }
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<FornecedorDTO>> ObterPorId(Guid id)
@@ -37,7 +38,7 @@ namespace DevIO.API.Controllers
             return fornecedor == null ? NotFound() : fornecedor;
         }
         [HttpPost]
-        public async Task<ActionResult<FornecedorDTO>> Adicionar(FornecedorDTO fornecedor)
+        public async Task<ActionResult<FornecedorDTO>> Adicionar([FromBody]FornecedorDTO fornecedor)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 

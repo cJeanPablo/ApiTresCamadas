@@ -2,10 +2,8 @@
 using DevIO.Business.Interfaces;
 using DevIO.Business.Models;
 using MapsterMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using RouteAttribute = Microsoft.AspNetCore.Components.RouteAttribute;
 
 namespace DevIO.API.Controllers
 {
@@ -25,11 +23,13 @@ namespace DevIO.API.Controllers
             _service = service;
             _mapper = mapper;
         }
+
         [HttpGet]
         public async Task<IEnumerable<ProdutoDTO>> ObterTodos()
         {
             return _mapper.Map<IEnumerable<ProdutoDTO>>(await _repository.ObterProdutosFornecedores());
         }
+
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<ProdutoDTO>> ObterPorId(Guid id)
         {
