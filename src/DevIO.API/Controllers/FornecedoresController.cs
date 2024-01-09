@@ -3,6 +3,7 @@ using DevIO.Business.Interfaces;
 using DevIO.Business.Models;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace DevIO.API.Controllers
 {
@@ -14,7 +15,8 @@ namespace DevIO.API.Controllers
 
         public FornecedoresController(IFornecedorRepository repository,
             IFornecedorService service,
-            IMapper mapper)
+            IMapper mapper,
+             INotificador notificador) : base (notificador)
         {
             _repository = repository;
             _service = service;
@@ -41,7 +43,7 @@ namespace DevIO.API.Controllers
 
             await _service.Adicionar(_mapper.Map<Fornecedor>(fornecedor));
 
-            return CustomResponse();
+            return CustomResponse(HttpStatusCode.Created, fornecedor);
         }
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<FornecedorDTO>> Atualizar(Guid id, FornecedorDTO fornecedor)
@@ -55,14 +57,14 @@ namespace DevIO.API.Controllers
 
             await _service.Atualizar(_mapper.Map<Fornecedor>(fornecedor));
 
-            return CustomResponse(ModelState);
+            return CustomResponse(HttpStatusCode.NoContent);
         }
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<FornecedorDTO>> Excluir(Guid id)
         {
             await _service.Remover(id);
 
-            return CustomResponse();
+            return CustomResponse(HttpStatusCode.NoContent);
         }
 
         private async Task<FornecedorDTO> ObterFornecedorProdutosEndereco(Guid id)

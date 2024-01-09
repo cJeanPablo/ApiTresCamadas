@@ -4,6 +4,7 @@ using DevIO.Business.Models;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using RouteAttribute = Microsoft.AspNetCore.Components.RouteAttribute;
 
 namespace DevIO.API.Controllers
@@ -17,7 +18,8 @@ namespace DevIO.API.Controllers
 
         public ProdutosController(IProdutoRepository repository,
             IProdutoService service,
-            IMapper mapper)
+            IMapper mapper,
+            INotificador notificador) : base (notificador)
         {
             _repository = repository;
             _service = service;
@@ -42,7 +44,7 @@ namespace DevIO.API.Controllers
 
             await _service.Adicionar(_mapper.Map<Produto>(produto));
 
-            return CustomResponse();
+            return CustomResponse(HttpStatusCode.Created);
         }
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<ProdutoDTO>> Atualizar(Guid id, ProdutoDTO produto)
@@ -65,7 +67,7 @@ namespace DevIO.API.Controllers
 
             await _service.Atualizar(_mapper.Map<Produto>(produtoAtualizacao));
 
-            return CustomResponse();
+            return CustomResponse(HttpStatusCode.NoContent);
         }
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<ProdutoDTO>> Excluir(Guid id)
@@ -76,7 +78,7 @@ namespace DevIO.API.Controllers
 
             await _service.Remover(id);
 
-            return CustomResponse();
+            return CustomResponse(HttpStatusCode.NoContent);
         }
 
         private async Task<ProdutoDTO> ObterProduto(Guid id)
