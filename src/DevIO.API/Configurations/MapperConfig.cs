@@ -2,7 +2,7 @@
 using DevIO.Business.Models;
 using Mapster;
 
-namespace DevIO.API.Configuration
+namespace DevIO.API.Configurations
 {
     public class MapperConfig : IRegister
     {

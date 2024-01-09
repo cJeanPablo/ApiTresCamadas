@@ -1,3 +1,4 @@
+using DevIO.API.Configurations;
 using DevIO.Data.Context;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<SqlDbContext>(options =>
 });
 
 builder.Services.AddMapster();
+builder.Services.ResolveDependencies();
 
 var app = builder.Build();
 
