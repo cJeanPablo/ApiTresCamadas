@@ -20,8 +20,4 @@
     <ProjectReference Include="..\DevIO.Data\DevIO.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
