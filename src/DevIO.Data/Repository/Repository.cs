@@ -57,7 +57,7 @@ namespace DevIO.Data.Repository
 
         public void Dispose()
         {
-            Db.Dispose();-
+            Db.Dispose();
         }
     }
 }
